@@ -1,1 +1,28 @@
-# TODO
+apiVersion: skaffold/v4beta11
+kind: Config
+metadata:
+  name: task-canvas-db
+build:
+  artifacts: []
+manifests:
+  helm:
+    releases:
+      - name: task-canvas-db
+        chartPath: helm/task-canvas-db
+      - name: task-canvas-db-configmap
+        chartPath: db/helm
+profiles:
+  - name: local
+    activation:
+      - command: dev
+    patches:
+      - op: add
+        path: /manifests/helm/releases/0
+        value:
+          name: task-canvas-db
+          chartPath: helm/task-canvas-db
+      - op: add
+        path: /manifests/helm/releases/1
+        value:
+          name: task-canvas-db-configmap
+          chartPath: db/helm

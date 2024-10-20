@@ -9,8 +9,6 @@ manifests:
     releases:
       - name: task-canvas-db
         chartPath: helm/task-canvas-db
-      - name: task-canvas-db-configmap
-        chartPath: db/helm
 profiles:
   - name: local
     activation:
@@ -21,8 +19,3 @@ profiles:
         value:
           name: task-canvas-db
           chartPath: helm/task-canvas-db
-      - op: add
-        path: /manifests/helm/releases/1
-        value:
-          name: task-canvas-db-configmap
-          chartPath: db/helm

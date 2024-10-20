@@ -13,9 +13,3 @@ profiles:
   - name: local
     activation:
       - command: dev
-    patches:
-      - op: add
-        path: /manifests/helm/releases/0
-        value:
-          name: task-canvas-db
-          chartPath: helm/task-canvas-db

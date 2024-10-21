@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: task-canvas-db-connection-test
+  annotations:
+    "helm.sh/hook": test
+spec:
+  template:
+    spec:
+      containers:
+      - name: task-canvas-db-connection-test
+        image: postgres:latest
+        env:
+          - name: TASK_CANVAS_DB_HOST
+            value: task-canvas-db-svc
+          - name: TASK_CANVAS_DB_PORT
+            value: "10080"
+          - name: TASK_CANVAS_DB_USER
+            value: developer
+          - name: TASK_CANVAS_DB_PASSWORD
+            value: developer
+          - name: TASK_CANVAS_DB_NAME
+            value: task_canvas
+        command: ["sh", "-c", "PGPASSWORD=$TASK_CANVAS_DB_PASSWORD psql -h $TASK_CANVAS_DB_HOST -p $TASK_CANVAS_DB_PORT -U $TASK_CANVAS_DB_USER -d $TASK_CANVAS_DB_NAME -c 'SELECT 1;'"]
+      restartPolicy: Never

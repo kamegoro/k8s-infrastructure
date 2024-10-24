@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elder-things-encyclopedia-db
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: elder-things-encyclopedia-db
+  template:
+    metadata:
+      labels:
+        app: elder-things-encyclopedia-db
+    spec:
+      containers:
+        - name: elder-things-encyclopedia-db
+          image: postgres:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: db-port
+              containerPort: 5432
+          env:
+            - name: POSTGRES_PASSWORD
+              value: root
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d
+              name: autoload-scripts
+            - mountPath: /data/sql
+              name: init-sql
+      volumes:
+        - name: autoload-scripts
+          configMap:
+            name: "elder-things-encyclopedia-db-autoload-scripts"
+        - name: init-sql
+          configMap:
+            name: "elder-things-encyclopedia-db-sql"

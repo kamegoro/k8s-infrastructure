@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: "elder-things-encyclopedia-db-svc"
+  name: "elder-things-encyclopedia-db-svc"
+spec:
+  selector:
+    app: elder-things-encyclopedia-db
+  type: NodePort
+  ports:
+  - name: "elder-things-encyclopedia-db-port"
+    port: 10090
+    targetPort: db-port

@@ -9,6 +9,8 @@ manifests:
     releases:
       - name: task-canvas-db
         chartPath: helm/task-canvas-db
+      - name: elder-things-encyclopedia
+        chartPath: helm/elder-things-encyclopedia-db
 profiles:
   - name: local
     activation:

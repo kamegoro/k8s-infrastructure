@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: elder-things-encyclopedia-db
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: elder-things-encyclopedia-db

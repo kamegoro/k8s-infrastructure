@@ -11,7 +11,7 @@ CREATE TABLE task_canvas.todo (
     id uuid primary key,
     content text not null,
     completed boolean not null,
-    created_at timestamp CURRENT_TIMESTAMP not null
+    created_at timestamp not null default now()
 );
 
 CREATE TABLE task_canvas.user_todo (

@@ -11,6 +11,8 @@ manifests:
         chartPath: helm/task-canvas-db
       - name: elder-things-encyclopedia
         chartPath: helm/elder-things-encyclopedia-db
+      - name: wiremock
+        chartPath: helm/wiremock
 profiles:
   - name: local
     activation:

@@ -11,8 +11,11 @@ manifests:
         chartPath: helm/task-canvas-db
       - name: elder-things-encyclopedia
         chartPath: helm/elder-things-encyclopedia-db
-      - name: wiremock
+      - name: task-canvas-api-mock
         chartPath: helm/wiremock
+        setValues:
+          service.targetPort: 8082
+          service.port: 8082
 profiles:
   - name: local
     activation:

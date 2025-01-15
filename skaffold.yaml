@@ -14,7 +14,7 @@ manifests:
       - name: task-canvas-api-mock
         chartPath: helm/wiremock
         setValues:
-          service.targetPort: 8081
+          service.targetPort: 8080
           service.port: 8081
 profiles:
   - name: local

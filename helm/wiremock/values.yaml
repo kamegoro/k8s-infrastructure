@@ -9,6 +9,9 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+deployment:
+  name: "wiremock"
+
 serviceAccount:
   create: true
   automount: true
@@ -19,6 +22,7 @@ podLabels: {}
 podSecurityContext: {}
 securityContext: {}
 service:
+  name: "wiremock"
   type: ClusterIP
   port: 8080
   targetPort: 8080

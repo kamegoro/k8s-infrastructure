@@ -1,16 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wiremock
+  name: {{ .Values.deployment.name }}
+  labels:
+    app: {{ .Values.deployment.name}}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: wiremock
+      app: {{ .Values.deployment.name }}
   template:
     metadata:
       labels:
-        app: wiremock
+        app: {{ .Values.deployment.name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}

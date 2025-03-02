@@ -3,7 +3,14 @@ kind: Config
 metadata:
   name: task-canvas-db
 build:
-  artifacts: []
+  local:
+    push: false
+    useBuildkit: true
+  artifacts:
+    - image: task-canvas-progress
+      context: ../task-canvas-progress
+      docker:
+        dockerfile: Dockerfile
 manifests:
   helm:
     releases:
@@ -18,6 +25,12 @@ manifests:
           service.name: task-canvas-api-mock
           service.targetPort: 8080
           service.port: 8081
+      - name: task-canvas-progress
+        chartPath: helm/task-canvas-progress
+        setValues:
+          image.repository: task-canvas-progress
+          image.tag: latest
+          image.imagePullPolicy: Never
 profiles:
   - name: local
     activation:

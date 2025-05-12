@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: task-canvas-api-svc
+  labels:
+    app: task-canvas-api-svc
+spec:
+  type: NodePort
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http-port
+      name: task-canvas-api-port
+  selector:
+    app: task-canvas-api

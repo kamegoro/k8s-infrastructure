@@ -11,6 +11,14 @@ build:
       context: ../task-canvas-progress
       docker:
         dockerfile: Dockerfile
+    - image: task-canvas-web
+      context: ../task-canvas/frontend
+      docker:
+        dockerfile: Dockerfile
+    - image: task-canvas-api
+      context: ../task-canvas/backend
+      docker:
+        dockerfile: Dockerfile
 manifests:
   helm:
     releases:
@@ -31,6 +39,36 @@ manifests:
           image.repository: task-canvas-progress
           image.tag: latest
           image.imagePullPolicy: Never
+      - name: task-canvas-web
+        chartPath: helm/task-canvas-web
+        setValues:
+          image.repository: task-canvas-web
+          image.tag: latest
+          image.imagePullPolicy: Never
+          service.port: 3000
+          deployment.containerPort: 3000
+        setValueTemplates:
+          taskCanvasWeb:
+            NEXT_PORT: '{{ default "3000" .TASK_CANVAS_WEB_PORT }}'
+            NEXT_BACKEND_BASE_URL: '{{ default "http://task-canvas-api-svc:8080" .TASK_CANVAS_API_URL }}'
+      - name: task-canvas-api
+        chartPath: helm/task-canvas-api
+        setValues:
+          image.repository: task-canvas-api
+          image.tag: latest
+          image.imagePullPolicy: Never
+          service.port: 8080
+          deployment.containerPort: 8080
+        setValueTemplates:
+          taskCanvasApi:
+            POSTGRES_HOST: '{{ default "task-canvas-db-svc" .TASK_CANVAS_DB_POSTGRES_HOST }}'
+            POSTGRES_PORT: '{{ default "10080" .TASK_CANVAS_DB_POSTGRES_PORT }}'
+            POSTGRES_DB: '{{ default "task_canvas" .TASK_CANVAS_DB_POSTGRES_DB }}'
+            POSTGRES_USER: '{{ default "developer" .TASK_CANVAS_DB_POSTGRES_USER }}'
+            POSTGRES_PASSWORD: '{{ default "developer" .TASK_CANVAS_DB_POSTGRES_PASSWORD }}'
+            GO_PORT: '{{ default "8080" .TASK_CANVAS_API_PORT }}'
+            JWT_SECRET: '{{ default "BKamxYHzZIJdniHhNAy4J+xs4S2USSwt678Wo4vV8vk=" .TASK_CANVAS_API_JWT_SECRET }}'
+
 profiles:
   - name: local
     activation:

@@ -73,3 +73,25 @@ profiles:
   - name: local
     activation:
       - command: dev
+  - name: task-canvas-web-e2e
+    activation:
+      - command: task-canvas-web-e2e
+    patches:
+      - op: remove
+        path: /manifests/helm/releases/5
+      - op: remove
+        path: /manifests/helm/releases/1
+      - op: remove
+        path: /manifests/helm/releases/0
+  - name: task-canvas-api-e2e
+    activation:
+      - command: task-canvas-api-e2e
+    patches:
+      - op: remove
+        path: /manifests/helm/releases/4
+      - op: remove
+        path: /manifests/helm/releases/3
+      - op: remove
+        path: /manifests/helm/releases/2
+      - op: remove
+        path: /manifests/helm/releases/1

@@ -32,7 +32,7 @@ manifests:
           deployment.name: task-canvas-api-mock
           service.name: task-canvas-api-mock
           service.targetPort: 8080
-          service.port: 8081
+          service.port: 8080
       - name: task-canvas-progress
         chartPath: helm/task-canvas-progress
         setValues:
@@ -73,6 +73,11 @@ profiles:
   - name: local
     activation:
       - command: dev
+    patches:
+      - op: remove
+        path: /manifests/helm/releases/2
+      - op: remove
+        path: /manifests/helm/releases/1
   - name: task-canvas-web-e2e
     activation:
       - command: task-canvas-web-e2e

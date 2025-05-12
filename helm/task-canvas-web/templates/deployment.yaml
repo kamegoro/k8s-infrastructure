@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task-canvas-web
+  labels:
+    app: task-canvas-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task-canvas-web
+  template:
+    metadata:
+      labels:
+        app: task-canvas-web
+    spec:
+      containers:
+      - name: task-canvas-web
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - name: http-port
+            containerPort: {{ .Values.deployment.containerPort }}
+        env:
+          - name: NEXT_PORT
+            value: '{{ .Values.taskCanvasWeb.NEXT_PORT }}'
+          - name: NEXT_BACKEND_BASE_URL
+            value: '{{ .Values.taskCanvasWeb.NEXT_BACKEND_BASE_URL }}'

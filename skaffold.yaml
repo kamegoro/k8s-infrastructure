@@ -68,11 +68,10 @@ manifests:
             POSTGRES_PASSWORD: '{{ default "developer" .TASK_CANVAS_DB_POSTGRES_PASSWORD }}'
             GO_PORT: '{{ default "8080" .TASK_CANVAS_API_PORT }}'
             JWT_SECRET: '{{ default "BKamxYHzZIJdniHhNAy4J+xs4S2USSwt678Wo4vV8vk=" .TASK_CANVAS_API_JWT_SECRET }}'
-
 profiles:
   - name: local
     activation:
-      - command: dev
+      - command: local
     patches:
       - op: remove
         path: /manifests/helm/releases/2
@@ -85,9 +84,26 @@ profiles:
       - op: remove
         path: /manifests/helm/releases/5
       - op: remove
+        path: /manifests/helm/releases/4
+      - op: remove
         path: /manifests/helm/releases/1
       - op: remove
         path: /manifests/helm/releases/0
+      - op: add
+        path: /manifests/helm/releases/0
+        value:
+          name: task-canvas-web
+          chartPath: helm/task-canvas-web
+          setValues:
+            image.repository: task-canvas-web
+            image.tag: latest
+            image.imagePullPolicy: Never
+            service.port: 3000
+            deployment.containerPort: 3000
+          setValueTemplates:
+            taskCanvasWeb:
+              NEXT_PORT: 3000
+              NEXT_BACKEND_BASE_URL: 'http://task-canvas-api-mock:8080'
   - name: task-canvas-api-e2e
     activation:
       - command: task-canvas-api-e2e

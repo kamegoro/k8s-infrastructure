@@ -29,9 +29,6 @@ manifests:
       - name: task-canvas-api-mock
         chartPath: helm/wiremock
         setValues:
-          resources.requests.cpu: 200m
-          resources.requests.memory: 256Mi
-          resources.limits.memory: 512Mi
           deployment.name: task-canvas-api-mock
           service.name: task-canvas-api-mock
           service.targetPort: 8080
@@ -50,9 +47,6 @@ manifests:
           image.imagePullPolicy: Never
           service.port: 3000
           deployment.containerPort: 3000
-          deployment.resources.requests.cpu: 100m
-          deployment.resources.requests.memory: 128Mi
-          deployment.resources.limits.memory: 256Mi
         setValueTemplates:
           taskCanvasWeb:
             NEXT_PORT: '{{ default "3000" .TASK_CANVAS_WEB_PORT }}'
@@ -106,9 +100,6 @@ profiles:
             image.imagePullPolicy: Never
             service.port: 3000
             deployment.containerPort: 3000
-            deployment.resources.requests.cpu: 200m
-            deployment.resources.requests.memory: 256Mi
-            deployment.resources.limits.memory: 512Mi
           setValueTemplates:
             taskCanvasWeb:
               NEXT_PORT: 3000

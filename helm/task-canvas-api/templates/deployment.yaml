@@ -14,6 +14,17 @@ spec:
       labels:
         app: task-canvas-api
     spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox
+          command:
+            - /bin/sh
+            - -c
+            - |
+              until nc -z {{ .Values.taskCanvasApi.POSTGRES_HOST }} {{ .Values.taskCanvasApi.POSTGRES_PORT }}; do
+                echo "Waiting for database..."
+                sleep 2
+              done
       containers:
       - name: task-canvas-api
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}

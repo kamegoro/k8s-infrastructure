@@ -82,6 +82,8 @@ profiles:
       - command: task-canvas-web-e2e
     patches:
       - op: remove
+        path: /build/artifacts/2
+      - op: remove
         path: /manifests/helm/releases/5
       - op: remove
         path: /manifests/helm/releases/4
@@ -108,6 +110,10 @@ profiles:
     activation:
       - command: task-canvas-api-e2e
     patches:
+      - op: remove
+        path: /build/artifacts/1
+      - op: remove
+        path: /build/artifacts/0
       - op: remove
         path: /manifests/helm/releases/4
       - op: remove

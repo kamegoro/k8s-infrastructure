@@ -1,0 +1,4 @@
+[tools]
+skaffold = "2.16.1"
+helm = "3.18.0"
+minikube = "1.37.0"
